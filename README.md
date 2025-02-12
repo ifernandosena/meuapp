@@ -1,6 +1,6 @@
 # Log de Alocação - React
 
-![Descrição da imagem](https://ibb.co/1GD06k6r)
+![PRINT](https://ibb.co/1GD06k6r)
 
 
 ## Descrição
