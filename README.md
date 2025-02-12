@@ -1,5 +1,8 @@
 # Log de Alocação - React
 
+![Descrição da imagem](https://ibb.co/1GD06k6r)
+
+
 ## Descrição
 Este projeto é um componente React para exibir logs de alocação com base em um intervalo de datas. O usuário pode selecionar uma data de início e uma data de fim para buscar os registros correspondentes de um banco de dados remoto via API.
 
