@@ -11,6 +11,14 @@ const LogAlocacao = () => {
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState("");
 
+  const PegarDados2 = async (di, df) => {
+    const resultado = await axios.post("http://192.168.1.214:3333/lista_Logaloc", {
+      inicio: di,
+      fim: df,
+    });
+    return resultado;
+  };
+
   const buscarDados = async () => {
     if (!dataInicio || !dataFim) {
       alert("Por favor, selecione as datas de início e fim.");
@@ -21,13 +29,15 @@ const LogAlocacao = () => {
     setErro("");
 
     try {
-      const response = await axios.get(
-        `http://192.168.1.214:3333/lista_Logaloc?inicio=${dataInicio}&fim=${dataFim}`
-      );
-      setDados(response.data);
+      const response = await PegarDados2(dataInicio, dataFim);
+
+      if (Array.isArray(response.data)) {
+        setDados(response.data);
+      } else {
+        setErro("Dados retornados não estão no formato esperado.");
+      }
     } catch (error) {
-      setErro("Erro ao buscar os dados.");
-      console.error(error);
+      setErro("Erro ao buscar os dados: " + (error.response?.data?.message || error.message));
     } finally {
       setCarregando(false);
     }
@@ -39,7 +49,6 @@ const LogAlocacao = () => {
         Log de Alocação <span className="version">v1.0</span>
       </h1>
 
-      {/* Filtros */}
       <div className="row mb-4 filters">
         <div className="col-md-4">
           <label htmlFor="dataInicio" className="form-label">
@@ -71,13 +80,11 @@ const LogAlocacao = () => {
             onClick={buscarDados}
             disabled={carregando}
           >
-            <i className="fa fa-search"></i>{" "}
-            {carregando ? "Buscando..." : "Buscar"}
+            <i className="fa fa-search"></i> {carregando ? "Buscando..." : "Buscar"}
           </button>
         </div>
       </div>
 
-      {/* Tabela */}
       <div className="table-responsive">
         <table className="table table-striped table-hover">
           <thead>

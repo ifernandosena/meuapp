@@ -1,6 +1,5 @@
-import React from "react";
+import React from "react"; 
 import LogAlocacao from "./components/LogAlocacao";
-
 
 function App() {
   return (
